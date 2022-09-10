@@ -1,5 +1,6 @@
 export default {
   systemFontSize: {
+    huge: 24,
     large: 20,
     medium: 17,
     small: 15,

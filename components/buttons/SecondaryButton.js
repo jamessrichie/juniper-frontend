@@ -4,7 +4,7 @@ import Button from "./Button";
 
 import colors from "../../config/colors";
 
-function PrimaryButton({ children, onPress, style, width }) {
+function SecondaryButton({ children, onPress, style, width }) {
   return (
     <Button
       color={colors.lightTextBox.placeholder}
@@ -20,4 +20,4 @@ function PrimaryButton({ children, onPress, style, width }) {
   );
 }
 
-export default PrimaryButton;
+export default SecondaryButton;
