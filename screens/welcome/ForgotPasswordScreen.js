@@ -16,7 +16,6 @@ import colors from "../../config/colors";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email().required().label("Email"),
-  password: Yup.string().password().required().label("Password"),
 });
 
 const styles = StyleSheet.create({
@@ -35,7 +34,7 @@ function ForgotPasswordScreen() {
     <SafeAreaView style={{ marginHorizontal: "10%" }}>
       <HugeAppText style={styles.header}>Forgot Password?</HugeAppText>
       <Formik
-        initialValues={{ email: "", password: "" }}
+        initialValues={{ email: "" }}
         onSubmit={(values) => console.log(values)}
         validationSchema={validationSchema}
       >
