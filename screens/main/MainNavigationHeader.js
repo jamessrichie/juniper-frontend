@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function NavigationHeader({ image }) {
+function MainNavigationHeader({ image }) {
   return (
     <SafeAreaView>
       <Image source={image} style={styles.image} />
@@ -18,4 +18,4 @@ function NavigationHeader({ image }) {
   );
 }
 
-export default NavigationHeader;
+export default MainNavigationHeader;

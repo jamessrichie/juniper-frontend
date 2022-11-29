@@ -1,6 +1,11 @@
 import React from "react";
-
-import { SafeAreaView, StyleSheet } from "react-native";
+import {
+  View,
+  Image,
+  ImageBackground,
+  SafeAreaView,
+  StyleSheet,
+} from "react-native";
 
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -22,75 +27,117 @@ const validationSchema = Yup.object().shape({
 });
 
 const styles = StyleSheet.create({
+  background: {
+    position: "relative",
+    flex: 1,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  container: {
+    marginHorizontal: "10%",
+    height: "55%",
+    bottom: "16%",
+  },
   header: {
     color: colors.text.secondary,
     marginVertical: 22,
     textAlign: "center",
   },
+  imageBackground: {
+    resizeMode: "cover",
+    position: "absolute",
+    top: 0,
+    bottom: "-115%",
+  },
   input: {
     marginVertical: 10,
   },
+  juniper: {
+    height: 50,
+    resizeMode: "contain",
+    width: undefined,
+    position: "absolute",
+    top: "15%",
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  wrapper: {
+    flex: 1,
+  },
 });
 
-function SignInScreen() {
+function SignInScreen({ navigation }) {
   return (
-    <SafeAreaView style={{ marginHorizontal: "10%" }}>
-      <HugeAppText style={styles.header}>Sign In</HugeAppText>
-      <Formik
-        initialValues={{ email: "", password: "" }}
-        onSubmit={(values) => console.log(values)}
-        validationSchema={validationSchema}
-      >
-        {({ handleSubmit }) => (
-          <>
-            <FormTextInput
-              autoCapitalize={"none"}
-              autoComplete={"email"}
-              autoCorrect={false}
-              clearButtonMode={"while-editing"}
-              field={"email"}
-              icon={"ios-mail"}
-              keyboardType={"email-address"}
-              placeholder={"Email Address"}
-              textContentType={"emailAddress"}
-              style={styles.input}
-            />
-            <FormTextInput
-              autoCapitalize={"none"}
-              autoComplete={"password"}
-              autoCorrect={false}
-              clearButtonMode={"while-editing"}
-              field={"password"}
-              icon={"ios-lock-closed"}
-              keyboardType={"default"}
-              placeholder={"Password"}
-              secureTextEntry
-              textContentType={"password"}
-              style={styles.input}
-            />
-            <SmallAppText
-              style={{
-                color: colors.text.tertiary,
-                marginVertical: 5,
-                textAlign: "center",
-              }}
-            >
-              Forgot Password?
-            </SmallAppText>
-            <PrimaryButton
-              onPress={handleSubmit}
-              style={{ marginVertical: 10 }}
-            >
-              Sign In
-            </PrimaryButton>
-          </>
-        )}
-      </Formik>
-      <SeparatorWithText style={{ marginVertical: 40 }}>
-        Don't Have an Account?
-      </SeparatorWithText>
-      <SecondaryButton>Create Account</SecondaryButton>
-    </SafeAreaView>
+    <View style={styles.wrapper}>
+      <ImageBackground
+        source={require("../../assets/images/backgrounds/wave.png")}
+        style={styles.background}
+        imageStyle={styles.imageBackground}
+      />
+      <Image
+        source={require("../../assets/images/whiteText/juniper.png")}
+        style={styles.juniper}
+      />
+      <SafeAreaView style={styles.container}>
+        <HugeAppText style={styles.header}>Sign In</HugeAppText>
+        <Formik
+          initialValues={{ email: "", password: "" }}
+          onSubmit={(values) => console.log(values)}
+          validationSchema={validationSchema}
+        >
+          {({ handleSubmit }) => (
+            <>
+              <FormTextInput
+                autoCapitalize={"none"}
+                autoComplete={"email"}
+                autoCorrect={false}
+                clearButtonMode={"while-editing"}
+                field={"email"}
+                icon={"ios-mail"}
+                keyboardType={"email-address"}
+                placeholder={"Email Address"}
+                textContentType={"emailAddress"}
+                style={styles.input}
+              />
+              <FormTextInput
+                autoCapitalize={"none"}
+                autoComplete={"password"}
+                autoCorrect={false}
+                clearButtonMode={"while-editing"}
+                field={"password"}
+                icon={"ios-lock-closed"}
+                keyboardType={"default"}
+                placeholder={"Password"}
+                secureTextEntry
+                textContentType={"password"}
+                style={styles.input}
+              />
+              <SmallAppText
+                style={{
+                  color: colors.text.tertiary,
+                  marginVertical: 5,
+                  textAlign: "center",
+                }}
+              >
+                Forgot Password?
+              </SmallAppText>
+              <PrimaryButton onPress={handleSubmit} style={{ marginTop: 10 }}>
+                Sign In
+              </PrimaryButton>
+            </>
+          )}
+        </Formik>
+        <SeparatorWithText style={{ marginVertical: 40 }}>
+          Don't Have an Account?
+        </SeparatorWithText>
+        <SecondaryButton onPress={() => navigation.navigate("register")}>
+          Create Account
+        </SecondaryButton>
+      </SafeAreaView>
+    </View>
   );
 }
 

@@ -9,7 +9,7 @@ import DiscoverScreen from "./tabs/discover/DiscoverScreen";
 import SearchScreen from "./tabs/search/SearchScreen";
 import MessageScreen from "./tabs/message/MessageScreen";
 import ProfileScreen from "./tabs/profile/ProfileScreen";
-import NavigationHeader from "./NavigationHeader";
+import MainNavigationHeader from "./MainNavigationHeader";
 
 import colors from "../../config/colors";
 import defaultStyles from "../../config/styles";
@@ -49,7 +49,7 @@ const profileScreenName = "profile";
 
 const Tab = createBottomTabNavigator();
 
-function NavigationScreen() {
+function MainNavigationScreen() {
   return (
     <NavigationContainer theme={navigationTheme}>
       <Tab.Navigator
@@ -68,7 +68,7 @@ function NavigationScreen() {
               image = require("../../assets/images/gradientText/juniper.png");
             }
 
-            return <NavigationHeader image={image} />;
+            return <MainNavigationHeader image={image} />;
           },
           tabBarIcon: ({ focused }) => {
             let icon;
@@ -103,4 +103,4 @@ function NavigationScreen() {
   );
 }
 
-export default NavigationScreen;
+export default MainNavigationScreen;
