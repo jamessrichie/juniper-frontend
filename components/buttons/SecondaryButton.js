@@ -4,16 +4,14 @@ import Button from "./Button";
 
 import colors from "../../config/colors";
 
-function SecondaryButton({ children, onPress, style, width }) {
+function SecondaryButton({ children, onPress, style }) {
   return (
     <Button
       color={colors.lightTextBox.placeholder}
       fillLeft={colors.lightTextBox.fill}
       fillRight={colors.lightTextBox.fill}
       onPress={onPress}
-      stroke={colors.lightTextBox.stroke}
       style={style}
-      width={width}
     >
       {children}
     </Button>

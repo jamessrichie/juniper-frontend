@@ -13,11 +13,11 @@ export default {
     small: 14,
   },
 
+  buttonFontSize: 18,
+
   iconSize: {
-    navbar: 25,
+    navbar: 30,
     inline: 18,
     chat: 32,
   },
-
-  buttonFontSize: 18,
 };

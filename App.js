@@ -1,7 +1,7 @@
 import React from "react";
-
-import { SafeAreaView } from "react-native";
+import NavigationScreen from "./screens/main/NavigationScreen";
+import SignInScreen from "./screens/welcome/SignInScreen";
 
 export default function App() {
-  return <SafeAreaView></SafeAreaView>;
+  return <SignInScreen></SignInScreen>;
 }

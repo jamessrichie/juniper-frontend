@@ -4,7 +4,7 @@ import Button from "./Button";
 
 import colors from "../../config/colors";
 
-function PrimaryButton({ children, onPress, style, width }) {
+function PrimaryButton({ children, onPress, style }) {
   return (
     <Button
       color={colors.white}
@@ -12,7 +12,6 @@ function PrimaryButton({ children, onPress, style, width }) {
       fillRight={colors.juniper.secondary}
       onPress={onPress}
       style={style}
-      width={width}
     >
       {children}
     </Button>
