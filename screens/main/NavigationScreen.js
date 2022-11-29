@@ -1,18 +1,18 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Ionicons } from "@expo/vector-icons";
 
 import DiscoverScreen from "./tabs/discover/DiscoverScreen";
 import SearchScreen from "./tabs/search/SearchScreen";
 import MessageScreen from "./tabs/message/MessageScreen";
 import ProfileScreen from "./tabs/profile/ProfileScreen";
-import { Ionicons } from "@expo/vector-icons";
+import NavigationHeader from "./NavigationHeader";
 
 import colors from "../../config/colors";
 import defaultStyles from "../../config/styles";
-import NavigationHeader from "./NavigationHeader";
 
 const styles = StyleSheet.create({
   icon: {

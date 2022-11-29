@@ -1,7 +1,6 @@
 import React from "react";
-import NavigationScreen from "./screens/main/NavigationScreen";
-import SignInScreen from "./screens/welcome/SignInScreen";
+import ForgotPasswordScreen from "./screens/welcome/ForgotPasswordScreen";
 
 export default function App() {
-  return <SignInScreen></SignInScreen>;
+  return <ForgotPasswordScreen></ForgotPasswordScreen>;
 }

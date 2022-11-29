@@ -5,12 +5,13 @@ import AppText from "./AppText";
 
 import defaultStyles from "../../config/styles";
 
+const styles = StyleSheet.create({
+  text: {
+    fontSize: defaultStyles.systemFontSize.small,
+  },
+});
+
 function SmallAppText({ children, style, weight }) {
-  const styles = StyleSheet.create({
-    text: {
-      fontSize: defaultStyles.systemFontSize.small,
-    },
-  });
   return (
     <AppText style={[styles.text, style]} weight={weight}>
       {children}

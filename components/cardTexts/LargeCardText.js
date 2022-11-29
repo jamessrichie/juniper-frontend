@@ -5,12 +5,13 @@ import CardText from "./CardText";
 
 import defaultStyles from "../../config/styles";
 
+const styles = StyleSheet.create({
+  text: {
+    fontSize: defaultStyles.cardFontSize.large,
+  },
+});
+
 function LargeCardText({ children, style }) {
-  const styles = StyleSheet.create({
-    text: {
-      fontSize: defaultStyles.cardFontSize.large,
-    },
-  });
   return (
     <CardText style={[styles.text, style]} weight={"bold"}>
       {children}

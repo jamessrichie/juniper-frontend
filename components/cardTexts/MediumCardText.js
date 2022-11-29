@@ -5,12 +5,13 @@ import CardText from "./CardText";
 
 import defaultStyles from "../../config/styles";
 
+const styles = StyleSheet.create({
+  text: {
+    fontSize: defaultStyles.cardFontSize.medium,
+  },
+});
+
 function MediumCardText({ children, style }) {
-  const styles = StyleSheet.create({
-    text: {
-      fontSize: defaultStyles.cardFontSize.medium,
-    },
-  });
   return (
     <CardText style={[styles.text, style]} weight={"semiBold"}>
       {children}

@@ -5,12 +5,13 @@ import AppText from "./AppText";
 
 import defaultStyles from "../../config/styles";
 
+const styles = StyleSheet.create({
+  text: {
+    fontSize: defaultStyles.systemFontSize.medium,
+  },
+});
+
 function MediumAppText({ children, style, weight }) {
-  const styles = StyleSheet.create({
-    text: {
-      fontSize: defaultStyles.systemFontSize.medium,
-    },
-  });
   return (
     <AppText style={[styles.text, style]} weight={weight}>
       {children}

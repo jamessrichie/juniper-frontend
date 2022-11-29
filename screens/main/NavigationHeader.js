@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, SafeAreaView, StyleSheet, Text } from "react-native";
+import { Image, SafeAreaView, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   image: {

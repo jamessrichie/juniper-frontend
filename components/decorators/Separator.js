@@ -1,5 +1,4 @@
 import React from "react";
-
 import { StyleSheet, View } from "react-native";
 
 import colors from "../../config/colors";
@@ -13,7 +12,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function SeparatorWithText({ children, style }) {
+function Separator({ style }) {
   return (
     <View style={[{ flexDirection: "row" }, style]}>
       <View style={styles.line} />
@@ -21,4 +20,4 @@ function SeparatorWithText({ children, style }) {
   );
 }
 
-export default SeparatorWithText;
+export default Separator;

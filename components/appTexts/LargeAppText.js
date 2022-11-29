@@ -5,12 +5,13 @@ import AppText from "./AppText";
 
 import defaultStyles from "../../config/styles";
 
+const styles = StyleSheet.create({
+  text: {
+    fontSize: defaultStyles.systemFontSize.large,
+  },
+});
+
 function LargeAppText({ children, style, weight }) {
-  const styles = StyleSheet.create({
-    text: {
-      fontSize: defaultStyles.systemFontSize.large,
-    },
-  });
   return (
     <AppText style={[styles.text, style]} weight={weight}>
       {children}

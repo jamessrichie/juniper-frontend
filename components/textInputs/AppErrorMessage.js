@@ -1,8 +1,9 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 
-import colors from "../../config/colors";
 import TinyAppText from "../appTexts/TinyAppText";
+
+import colors from "../../config/colors";
 
 const styles = StyleSheet.create({
   text: {
