@@ -18,8 +18,10 @@ import SmallAppText from "../../components/appTexts/SmallAppText";
 import SeparatorWithText from "../../components/decorators/SeparatorWithText";
 import SecondaryButton from "../../components/buttons/SecondaryButton";
 
+import "./global.js";
 import colors from "../../config/colors";
 import FormTextInput from "../../components/textInputs/FormTextInput";
+import TinyHyperlink from "../../components/hyperlinks/TinyHyperlink";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email().required().label("Email"),
@@ -45,6 +47,11 @@ const styles = StyleSheet.create({
     marginVertical: 22,
     textAlign: "center",
   },
+  hyperlink: {
+    color: colors.text.tertiary,
+    marginVertical: 5,
+    alignSelf: "center",
+  },
   imageBackground: {
     resizeMode: "cover",
     position: "absolute",
@@ -68,6 +75,20 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+const sendFormToApi = (values) => {
+  return fetch(global.API_HOST + "/login/", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: values.email,
+      password: values.password,
+    }),
+  });
+};
 
 function SignInScreen({ navigation }) {
   return (
@@ -115,15 +136,12 @@ function SignInScreen({ navigation }) {
                 textContentType={"password"}
                 style={styles.input}
               />
-              <SmallAppText
-                style={{
-                  color: colors.text.tertiary,
-                  marginVertical: 5,
-                  textAlign: "center",
-                }}
-              >
-                Forgot Password?
-              </SmallAppText>
+              <TinyHyperlink
+                linkColor={colors.text.tertiary}
+                onPress={() => navigation.navigate("forgot")}
+                linkText={"Forgot Password?"}
+                style={styles.hyperlink}
+              />
               <PrimaryButton onPress={handleSubmit} style={{ marginTop: 10 }}>
                 Sign In
               </PrimaryButton>

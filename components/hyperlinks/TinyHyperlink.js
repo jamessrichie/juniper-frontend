@@ -1,21 +1,15 @@
 import React from "react";
-import {
-  View,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  Linking,
-} from "react-native";
+import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
 
 import SmallAppText from "../appTexts/SmallAppText";
 
-import colors from "../../config/colors";
-
 function TinyHyperlink({
-  color,
-  preUrlText,
-  url,
-  urlText,
-  postUrlText,
+  textColor,
+  linkColor,
+  preLinkText,
+  onPress,
+  linkText,
+  postLinkText,
   style,
 }) {
   const styles = StyleSheet.create({
@@ -24,25 +18,25 @@ function TinyHyperlink({
       flexDirection: "row",
     },
     text: {
-      color,
+      color: textColor,
     },
     hyperlink: {
-      color: colors.hyperlink,
+      color: linkColor,
     },
   });
 
   return (
     <View style={[styles.container, style]}>
-      {preUrlText && (
-        <SmallAppText style={styles.text}>{preUrlText} </SmallAppText>
+      {preLinkText && (
+        <SmallAppText style={styles.text}>{preLinkText} </SmallAppText>
       )}
-      <TouchableWithoutFeedback onPress={() => Linking.openURL(url)}>
+      <TouchableWithoutFeedback onPress={onPress}>
         <View>
-          <SmallAppText style={styles.hyperlink}>{urlText}</SmallAppText>
+          <SmallAppText style={styles.hyperlink}>{linkText}</SmallAppText>
         </View>
       </TouchableWithoutFeedback>
-      {postUrlText && (
-        <SmallAppText style={styles.text}> {postUrlText}</SmallAppText>
+      {postLinkText && (
+        <SmallAppText style={styles.text}> {postLinkText}</SmallAppText>
       )}
     </View>
   );

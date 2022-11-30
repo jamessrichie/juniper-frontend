@@ -1,12 +1,12 @@
 import React from "react";
 import {
+  KeyboardAvoidingView,
   Image,
+  ImageBackground,
+  Linking,
   SafeAreaView,
   StyleSheet,
-  ImageBackground,
   View,
-  KeyboardAvoidingView,
-  ScrollView,
 } from "react-native";
 
 import { Formik } from "formik";
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
 
 function SignInScreen({ navigation }) {
   return (
-    <KeyboardAvoidingView style={styles.wrapper} behavior="padding">
+    <View style={styles.wrapper} behavior="padding">
       <ImageBackground
         source={require("../../assets/images/backgrounds/wave.png")}
         style={styles.background}
@@ -158,12 +158,13 @@ function SignInScreen({ navigation }) {
                 style={styles.input}
               />
               <TinyHyperlink
-                color={colors.text.tertiary}
-                preUrlText={"I have read and agree to the"}
-                url={"http://google.com"}
-                urlText={"Terms & Conditions"}
+                textColor={colors.text.tertiary}
+                linkColor={colors.hyperlink}
+                preLinkText={"I have read and agree to the"}
+                onPress={() => Linking.openURL("https://google.com")}
+                linkText={"Terms & Conditions"}
                 style={styles.hyperlink}
-              ></TinyHyperlink>
+              />
               <PrimaryButton onPress={handleSubmit} style={{ marginTop: 10 }}>
                 Create Account
               </PrimaryButton>
@@ -177,7 +178,7 @@ function SignInScreen({ navigation }) {
           Sign In
         </SecondaryButton>
       </SafeAreaView>
-    </KeyboardAvoidingView>
+    </View>
   );
 }
 

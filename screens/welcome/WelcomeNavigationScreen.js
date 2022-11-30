@@ -3,34 +3,12 @@ import { StyleSheet, Text, View } from "react-native";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Ionicons } from "@expo/vector-icons";
 
-import colors from "../../config/colors";
-import defaultStyles from "../../config/styles";
 import ForgotPasswordScreen from "./ForgotPasswordScreen";
 import RegistrationScreen from "./RegistrationScreen";
 import SignInScreen from "./SignInScreen";
 
-const styles = StyleSheet.create({
-  icon: {
-    color: colors.black,
-    paddingVertical: 15,
-  },
-  tabBar: {
-    backgroundColor: colors.white,
-    borderTopWidth: 0,
-    elevation: 20,
-    height: 84,
-    paddingHorizontal: "6%",
-    shadowColor: colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
-  },
-});
+import colors from "../../config/colors";
 
 const navigationTheme = {
   colors: {
@@ -64,7 +42,7 @@ const SlideTransition = {
 };
 
 // Screen names
-const forgotPasswordScreenName = "reset";
+const forgotPasswordScreenName = "forgot";
 const registrationScreenName = "register";
 const signInScreenName = "login";
 
@@ -74,7 +52,7 @@ function WelcomeNavigationScreen() {
   return (
     <NavigationContainer theme={navigationTheme}>
       <Stack.Navigator
-        initialRouteName={forgotPasswordScreenName}
+        initialRouteName={signInScreenName}
         screenOptions={{
           headerShown: false,
           backgroundImage: require("../../assets/images/backgrounds/wave.png"),
