@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   StyleSheet,
   View,
+  Keyboard,
 } from "react-native";
 
 import { Formik } from "formik";
@@ -16,7 +17,6 @@ YupPassword(Yup);
 
 import PrimaryButton from "../../components/buttons/PrimaryButton";
 import HugeAppText from "../../components/appTexts/HugeAppText";
-import SmallAppText from "../../components/appTexts/SmallAppText";
 import SeparatorWithText from "../../components/decorators/SeparatorWithText";
 import SecondaryButton from "../../components/buttons/SecondaryButton";
 
@@ -27,7 +27,7 @@ import TinyHyperlink from "../../components/hyperlinks/TinyHyperlink";
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().label("Name"),
   email: Yup.string().email().required().label("Email"),
-  password: Yup.string().password().required().label("Password"),
+  password: Yup.string().min(4).required().label("Password"),
   passwordConfirmation: Yup.string().oneOf(
     [Yup.ref("password"), null],
     "Passwords must match"
@@ -81,6 +81,28 @@ const styles = StyleSheet.create({
   },
 });
 
+const sendFormToApi = async (values) => {
+  try {
+    Keyboard.dismiss();
+    const response = await fetch(global.API_HOST + "/user/create", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: values.name,
+        email: values.email,
+        password: values.password,
+      }),
+    });
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 function SignInScreen({ navigation }) {
   return (
     <View style={styles.wrapper} behavior="padding">
@@ -102,7 +124,7 @@ function SignInScreen({ navigation }) {
             password: "",
             passwordConfirmation: "",
           }}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={async (values) => console.log(await sendFormToApi(values))}
           validationSchema={validationSchema}
         >
           {({ handleSubmit }) => (

@@ -5,6 +5,7 @@ import {
   ImageBackground,
   SafeAreaView,
   StyleSheet,
+  Keyboard,
 } from "react-native";
 
 import { Formik } from "formik";
@@ -18,14 +19,13 @@ import SmallAppText from "../../components/appTexts/SmallAppText";
 import SeparatorWithText from "../../components/decorators/SeparatorWithText";
 import SecondaryButton from "../../components/buttons/SecondaryButton";
 
-import "./global.js";
 import colors from "../../config/colors";
 import FormTextInput from "../../components/textInputs/FormTextInput";
 import TinyHyperlink from "../../components/hyperlinks/TinyHyperlink";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email().required().label("Email"),
-  password: Yup.string().password().required().label("Password"),
+  password: Yup.string().min(4).required().label("Password"),
 });
 
 const styles = StyleSheet.create({
@@ -76,18 +76,25 @@ const styles = StyleSheet.create({
   },
 });
 
-const sendFormToApi = (values) => {
-  return fetch(global.API_HOST + "/login/", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      email: values.email,
-      password: values.password,
-    }),
-  });
+const sendFormToApi = async (values) => {
+  try {
+    Keyboard.dismiss();
+    const response = await fetch(global.API_HOST + "/auth/verify-credentials", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: values.email,
+        password: values.password,
+      }),
+    });
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 function SignInScreen({ navigation }) {
@@ -106,7 +113,7 @@ function SignInScreen({ navigation }) {
         <HugeAppText style={styles.header}>Sign In</HugeAppText>
         <Formik
           initialValues={{ email: "", password: "" }}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={async (values) => console.log(await sendFormToApi(values))}
           validationSchema={validationSchema}
         >
           {({ handleSubmit }) => (
