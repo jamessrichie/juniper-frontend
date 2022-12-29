@@ -8,6 +8,7 @@ import {
   View,
 } from "react-native";
 import { showMessage } from "react-native-flash-message";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -36,18 +37,12 @@ const validationSchema = Yup.object().shape({
 });
 
 const styles = StyleSheet.create({
-  background: {
-    bottom: 0,
-    flex: 1,
-    left: 0,
-    position: "relative",
-    right: 0,
-    top: 0,
-  },
   container: {
-    bottom: "16%",
-    height: "55%",
-    marginHorizontal: "10%",
+    flex: 1,
+    marginTop: "55%",
+  },
+  formContainer: {
+    paddingHorizontal: "10%",
   },
   header: {
     color: colors.text.secondary,
@@ -60,30 +55,11 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     marginTop: 5,
   },
-  imageBackground: {
-    bottom: "-115%",
-    position: "absolute",
-    resizeMode: "cover",
-    top: 0,
-  },
   input: {
     marginVertical: 10,
   },
-  juniper: {
-    bottom: 0,
-    height: 50,
-    left: 0,
-    position: "absolute",
-    resizeMode: "contain",
-    right: 0,
-    top: "15%",
-    width: undefined,
-  },
   separator: {
     marginVertical: 40,
-  },
-  wrapper: {
-    flex: 1,
   },
 });
 
@@ -124,18 +100,13 @@ const sendFormToApi = async (values) => {
 
 function SignInScreen({ navigation }) {
   return (
-    <View style={styles.wrapper}>
-      <ImageBackground
-        imageStyle={styles.imageBackground}
-        source={require("../../assets/images/backgrounds/wave.png")}
-        style={styles.background}
-      />
-      <Image
-        source={require("../../assets/images/whiteText/juniper.png")}
-        style={styles.juniper}
-      />
-      <SafeAreaView style={styles.container}>
-        <HugeAppText style={styles.header}>Sign In</HugeAppText>
+    <View style={styles.container}>
+      <HugeAppText style={styles.header}>Sign In</HugeAppText>
+      <KeyboardAwareScrollView
+        keyboardShouldPersistTaps={"always"}
+        showsVerticalScrollIndicator={false}
+        style={styles.formContainer}
+      >
         <Formik
           initialValues={{ email: "", password: "" }}
           onSubmit={async (values) => console.log(await sendFormToApi(values))}
@@ -184,7 +155,8 @@ function SignInScreen({ navigation }) {
         <SecondaryButton onPress={() => navigation.navigate("register")}>
           Create Account
         </SecondaryButton>
-      </SafeAreaView>
+        <View style={{ height: 60 }}></View>
+      </KeyboardAwareScrollView>
     </View>
   );
 }

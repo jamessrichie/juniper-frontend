@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import FlashMessage from "react-native-flash-message";
 
 import ForgotPasswordScreen from "./screens/welcome/ForgotPasswordScreen";
@@ -34,7 +34,7 @@ export default function App() {
 
   return (
     <>
-      <SignInScreen />
+      <WelcomeNavigationScreen />
       <FlashMessage
         position="bottom"
         floating={true}
