@@ -1,11 +1,13 @@
 import React from "react";
 import {
-  View,
   Image,
   ImageBackground,
+  Keyboard,
   SafeAreaView,
   StyleSheet,
+  View,
 } from "react-native";
+import { showMessage } from "react-native-flash-message";
 
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -26,17 +28,17 @@ const validationSchema = Yup.object().shape({
 
 const styles = StyleSheet.create({
   background: {
-    position: "relative",
-    flex: 1,
-    top: 0,
-    left: 0,
-    right: 0,
     bottom: 0,
+    flex: 1,
+    left: 0,
+    position: "relative",
+    right: 0,
+    top: 0,
   },
   container: {
-    marginHorizontal: "10%",
-    height: "55%",
     bottom: "16%",
+    height: "55%",
+    marginHorizontal: "10%",
   },
   header: {
     color: colors.text.secondary,
@@ -44,36 +46,77 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   imageBackground: {
-    resizeMode: "cover",
-    position: "absolute",
-    top: 0,
     bottom: "-115%",
+    position: "absolute",
+    resizeMode: "cover",
+    top: 0,
   },
   input: {
     marginVertical: 10,
   },
   juniper: {
-    height: 50,
-    resizeMode: "contain",
-    width: undefined,
-    position: "absolute",
-    top: "15%",
-    left: 0,
-    right: 0,
     bottom: 0,
+    height: 50,
+    left: 0,
+    position: "absolute",
+    resizeMode: "contain",
+    right: 0,
+    top: "15%",
+    width: undefined,
+  },
+  separator: {
+    marginVertical: 40,
   },
   wrapper: {
     flex: 1,
   },
 });
 
+const sendFormToApi = async (values) => {
+  try {
+    Keyboard.dismiss();
+    const response = await fetch(
+      global.API_HOST + "/auth/request-reset-password",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: values.email,
+        }),
+      }
+    );
+    const json = await response.json();
+
+    if (response.status === 200) {
+      showMessage({
+        message: "Successfully requested password reset",
+        type: "success",
+      });
+    } else {
+      showMessage({
+        message: json.body,
+        type: "danger",
+      });
+    }
+    return json;
+  } catch (error) {
+    showMessage({
+      message: error.toString(),
+      type: "danger",
+    });
+  }
+};
+
 function ForgotPasswordScreen({ navigation }) {
   return (
     <View style={styles.wrapper}>
       <ImageBackground
+        imageStyle={styles.imageBackground}
         source={require("../../assets/images/backgrounds/wave.png")}
         style={styles.background}
-        imageStyle={styles.imageBackground}
       />
       <Image
         source={require("../../assets/images/whiteText/juniper.png")}
@@ -83,7 +126,7 @@ function ForgotPasswordScreen({ navigation }) {
         <HugeAppText style={styles.header}>Forgot Password?</HugeAppText>
         <Formik
           initialValues={{ email: "" }}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={async (values) => console.log(await sendFormToApi(values))}
           validationSchema={validationSchema}
         >
           {({ handleSubmit }) => (
@@ -100,13 +143,14 @@ function ForgotPasswordScreen({ navigation }) {
                 textContentType={"emailAddress"}
                 style={styles.input}
               />
-              <PrimaryButton onPress={handleSubmit} style={{ marginTop: 10 }}>
+              <View style={{ height: 10 }}></View>
+              <PrimaryButton onPress={handleSubmit}>
                 Reset Password
               </PrimaryButton>
             </>
           )}
         </Formik>
-        <SeparatorWithText style={{ marginVertical: 40 }}>
+        <SeparatorWithText style={styles.separator}>
           Already have your password?
         </SeparatorWithText>
         <SecondaryButton onPress={() => navigation.navigate("login")}>

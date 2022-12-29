@@ -5,6 +5,8 @@ export default {
   black: "#000000",
 
   hyperlink: "#43cea2",
+  success: "#3dc13c",
+  warning: "#f3bb1b",
   error: "#ff3333",
 
   juniper: {

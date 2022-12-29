@@ -1,16 +1,16 @@
 import React from "react";
-import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 
 import SmallAppText from "../appTexts/SmallAppText";
 
 function TinyHyperlink({
-  textColor,
   linkColor,
-  preLinkText,
-  onPress,
   linkText,
+  onPress,
+  preLinkText,
   postLinkText,
   style,
+  textColor,
 }) {
   const styles = StyleSheet.create({
     container: {

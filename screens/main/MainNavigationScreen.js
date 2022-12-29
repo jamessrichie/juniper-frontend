@@ -5,11 +5,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 
+import MainNavigationHeader from "./MainNavigationHeader";
 import DiscoverScreen from "./tabs/discover/DiscoverScreen";
 import SearchScreen from "./tabs/search/SearchScreen";
 import MessageScreen from "./tabs/message/MessageScreen";
 import ProfileScreen from "./tabs/profile/ProfileScreen";
-import MainNavigationHeader from "./MainNavigationHeader";
 
 import colors from "../../config/colors";
 import defaultStyles from "../../config/styles";
@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: "6%",
     shadowColor: colors.black,
     shadowOffset: {
-      width: 0,
       height: 0,
+      width: 0,
     },
     shadowOpacity: 0.2,
     shadowRadius: 10,

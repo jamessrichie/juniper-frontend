@@ -25,14 +25,14 @@ function AppTextInput({ icon, marginVertical, style, ...otherProps }) {
     icon: {
       color: colors.lightTextBox.placeholder,
       paddingLeft: 16,
-      paddingVertical: 13,
+      paddingVertical: 15,
       width: "13%",
     },
     text: {
-      fontSize: defaultStyles.systemFontSize.small,
       fontFamily: "NunitoSansRegular",
+      fontSize: defaultStyles.systemFontSize.small,
       paddingRight: 5,
-      paddingVertical: 13,
+      paddingVertical: 15,
       width: "85%",
     },
   });

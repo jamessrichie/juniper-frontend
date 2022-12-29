@@ -1,5 +1,4 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -54,23 +53,23 @@ function WelcomeNavigationScreen() {
       <Stack.Navigator
         initialRouteName={signInScreenName}
         screenOptions={{
-          headerShown: false,
           backgroundImage: require("../../assets/images/backgrounds/wave.png"),
+          headerShown: false,
         }}
       >
         <Stack.Screen
-          name={forgotPasswordScreenName}
           component={ForgotPasswordScreen}
+          name={forgotPasswordScreenName}
           options={{ ...SlideTransition }}
         />
         <Stack.Screen
-          name={registrationScreenName}
           component={RegistrationScreen}
+          name={registrationScreenName}
           options={{ ...SlideTransition }}
         />
         <Stack.Screen
-          name={signInScreenName}
           component={SignInScreen}
+          name={signInScreenName}
           options={{ ...SlideTransition }}
         />
       </Stack.Navigator>

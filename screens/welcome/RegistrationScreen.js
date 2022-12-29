@@ -1,33 +1,40 @@
 import React from "react";
 import {
-  KeyboardAvoidingView,
   Image,
   ImageBackground,
+  Keyboard,
   Linking,
   SafeAreaView,
   StyleSheet,
   View,
-  Keyboard,
 } from "react-native";
+import { showMessage } from "react-native-flash-message";
 
 import { Formik } from "formik";
 import * as Yup from "yup";
 import YupPassword from "yup-password";
 YupPassword(Yup);
 
-import PrimaryButton from "../../components/buttons/PrimaryButton";
 import HugeAppText from "../../components/appTexts/HugeAppText";
-import SeparatorWithText from "../../components/decorators/SeparatorWithText";
+import PrimaryButton from "../../components/buttons/PrimaryButton";
 import SecondaryButton from "../../components/buttons/SecondaryButton";
+import SeparatorWithText from "../../components/decorators/SeparatorWithText";
+import TinyHyperlink from "../../components/hyperlinks/TinyHyperlink";
+import FormTextInput from "../../components/textInputs/FormTextInput";
 
 import colors from "../../config/colors";
-import FormTextInput from "../../components/textInputs/FormTextInput";
-import TinyHyperlink from "../../components/hyperlinks/TinyHyperlink";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().label("Name"),
   email: Yup.string().email().required().label("Email"),
-  password: Yup.string().min(4).required().label("Password"),
+  password: Yup.string()
+    .min(4)
+    .minLowercase(1)
+    .minUppercase(1)
+    .minNumbers(1)
+    .minSymbols(1)
+    .required()
+    .label("Password"),
   passwordConfirmation: Yup.string().oneOf(
     [Yup.ref("password"), null],
     "Passwords must match"
@@ -36,45 +43,49 @@ const validationSchema = Yup.object().shape({
 
 const styles = StyleSheet.create({
   background: {
-    position: "relative",
-    flex: 1,
-    top: 0,
-    left: 0,
-    right: 0,
     bottom: 0,
+    flex: 1,
+    left: 0,
+    position: "relative",
+    right: 0,
+    top: 0,
   },
   container: {
-    marginHorizontal: "10%",
-    height: "55%",
     bottom: "24%",
-  },
-  hyperlink: {
-    alignSelf: "center",
-    marginVertical: 5,
+    height: "55%",
+    marginHorizontal: "10%",
   },
   header: {
     color: colors.text.secondary,
     marginVertical: 22,
     textAlign: "center",
   },
+  hyperlink: {
+    alignSelf: "center",
+    marginBottom: 15,
+    marginTop: 5,
+  },
   imageBackground: {
-    resizeMode: "cover",
-    position: "absolute",
-    top: 0,
     bottom: "-80%",
+    position: "absolute",
+    resizeMode: "cover",
+    top: 0,
   },
   input: {
     marginVertical: 10,
   },
   juniper: {
-    height: 50,
-    resizeMode: "contain",
-    width: undefined,
-    position: "absolute",
-    top: "9%",
-    left: 0,
-    right: 0,
     bottom: 0,
+    height: 50,
+    left: 0,
+    position: "absolute",
+    resizeMode: "contain",
+    right: 0,
+    top: "9%",
+    width: undefined,
+  },
+  separator: {
+    marginVertical: 40,
   },
   wrapper: {
     flex: 1,
@@ -97,19 +108,34 @@ const sendFormToApi = async (values) => {
       }),
     });
     const json = await response.json();
+
+    if (response.status === 200) {
+      showMessage({
+        message: "Successfully created user",
+        type: "success",
+      });
+    } else {
+      showMessage({
+        message: json.status,
+        type: "danger",
+      });
+    }
     return json;
   } catch (error) {
-    console.error(error);
+    showMessage({
+      message: error.toString(),
+      type: "danger",
+    });
   }
 };
 
-function SignInScreen({ navigation }) {
+function RegistrationScreen({ navigation }) {
   return (
     <View style={styles.wrapper} behavior="padding">
       <ImageBackground
+        imageStyle={styles.imageBackground}
         source={require("../../assets/images/backgrounds/wave.png")}
         style={styles.background}
-        imageStyle={styles.imageBackground}
       />
       <Image
         source={require("../../assets/images/whiteText/juniper.png")}
@@ -180,20 +206,20 @@ function SignInScreen({ navigation }) {
                 style={styles.input}
               />
               <TinyHyperlink
-                textColor={colors.text.tertiary}
                 linkColor={colors.hyperlink}
-                preLinkText={"I have read and agree to the"}
-                onPress={() => Linking.openURL("https://google.com")}
                 linkText={"Terms & Conditions"}
+                onPress={() => Linking.openURL("https://google.com")}
+                preLinkText={"I have read and agree to the"}
+                textColor={colors.text.tertiary}
                 style={styles.hyperlink}
               />
-              <PrimaryButton onPress={handleSubmit} style={{ marginTop: 10 }}>
+              <PrimaryButton onPress={handleSubmit}>
                 Create Account
               </PrimaryButton>
             </>
           )}
         </Formik>
-        <SeparatorWithText style={{ marginVertical: 40 }}>
+        <SeparatorWithText style={styles.separator}>
           Already Have An Account?
         </SeparatorWithText>
         <SecondaryButton onPress={() => navigation.navigate("login")}>
@@ -204,4 +230,4 @@ function SignInScreen({ navigation }) {
   );
 }
 
-export default SignInScreen;
+export default RegistrationScreen;

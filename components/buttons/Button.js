@@ -1,5 +1,11 @@
 import React from "react";
-import { View, StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 
 import { useFonts } from "expo-font";
 import { LinearGradient } from "expo-linear-gradient";
@@ -24,14 +30,14 @@ function Button({
 
   const styles = StyleSheet.create({
     container: {
+      elevation: 20,
       shadowColor: colors.black,
       shadowOffset: {
+        height: 6,
         width: 0,
-        height: 5,
       },
       shadowOpacity: 0.2,
       shadowRadius: 6,
-      elevation: 20,
     },
     button: {
       alignItems: "center",
@@ -43,13 +49,17 @@ function Button({
     },
     text: {
       color,
-      fontSize: defaultStyles.buttonFontSize,
       fontFamily: "NunitoSansRegular",
+      fontSize: defaultStyles.buttonFontSize,
+    },
+    touch: {
+      borderColor: stroke,
+      borderRadius: 100,
     },
   });
 
   return (
-    <TouchableWithoutFeedback onPress={onPress}>
+    <TouchableHighlight style={styles.touch} onPress={onPress}>
       <View style={styles.container}>
         <LinearGradient
           colors={[fillLeft, fillRight]}
@@ -60,7 +70,7 @@ function Button({
           <Text style={styles.text}>{children}</Text>
         </LinearGradient>
       </View>
-    </TouchableWithoutFeedback>
+    </TouchableHighlight>
   );
 }
 
