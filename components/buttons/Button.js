@@ -30,7 +30,6 @@ function Button({
 
   const styles = StyleSheet.create({
     container: {
-      elevation: 20,
       shadowColor: colors.black,
       shadowOffset: {
         height: 6,

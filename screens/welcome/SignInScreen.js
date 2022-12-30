@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Image,
-  ImageBackground,
-  Keyboard,
-  SafeAreaView,
-  StyleSheet,
-  View,
-} from "react-native";
+import { Keyboard, StyleSheet, View } from "react-native";
 import { showMessage } from "react-native-flash-message";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
@@ -81,12 +74,17 @@ const sendFormToApi = async (values) => {
 
     if (response.status === 200) {
       showMessage({
-        message: "Successfully signed in",
+        message: "Success",
         type: "success",
+      });
+    } else if (response.status === 400) {
+      showMessage({
+        message: json.status,
+        type: "warning",
       });
     } else {
       showMessage({
-        message: json.body,
+        message: json.status,
         type: "danger",
       });
     }

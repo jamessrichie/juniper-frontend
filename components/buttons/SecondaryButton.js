@@ -1,4 +1,5 @@
 import React from "react";
+import { Platform } from "react-native";
 
 import Button from "./Button";
 
@@ -11,6 +12,7 @@ function SecondaryButton({ children, onPress, style }) {
       fillLeft={colors.lightTextBox.fill}
       fillRight={colors.lightTextBox.fill}
       onPress={onPress}
+      stroke={Platform.OS === "ios" ? colors.white : colors.lightTextBox.stroke}
       style={style}
     >
       {children}

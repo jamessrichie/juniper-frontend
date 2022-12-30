@@ -8,6 +8,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import ForgotPasswordScreen from "./ForgotPasswordScreen";
 import RegistrationScreen from "./RegistrationScreen";
 import SignInScreen from "./SignInScreen";
+import CheckEmailScreen from "./CheckEmailScreen";
 
 import colors from "../../config/colors";
 
@@ -71,6 +72,7 @@ const styles = StyleSheet.create({
 const forgotPasswordScreenName = "forgot";
 const registrationScreenName = "register";
 const signInScreenName = "login";
+const checkEmailScreenName = "checkEmail";
 
 const Stack = createStackNavigator();
 
@@ -93,6 +95,11 @@ function WelcomeNavigationScreen() {
             headerShown: false,
           }}
         >
+          <Stack.Screen
+            component={CheckEmailScreen}
+            name={checkEmailScreenName}
+            options={{ ...SlideTransition }}
+          />
           <Stack.Screen
             component={ForgotPasswordScreen}
             name={forgotPasswordScreenName}

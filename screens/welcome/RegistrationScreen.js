@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Keyboard,
-  Linking,
-  SafeAreaView,
-  StyleSheet,
-  View,
-} from "react-native";
+import { Keyboard, Linking, StyleSheet, View } from "react-native";
 import { showMessage } from "react-native-flash-message";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
@@ -66,7 +60,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const sendFormToApi = async (values) => {
+const sendFormToApi = async (navigation, values) => {
   try {
     Keyboard.dismiss();
     const response = await fetch(global.API_HOST + "/user/create", {
@@ -84,10 +78,7 @@ const sendFormToApi = async (values) => {
     const json = await response.json();
 
     if (response.status === 200) {
-      showMessage({
-        message: "Successfully created user",
-        type: "success",
-      });
+      navigation.navigate("checkEmail", { email: values.email });
     } else {
       showMessage({
         message: json.status,
@@ -119,7 +110,7 @@ function RegistrationScreen({ navigation }) {
             password: "",
             passwordConfirmation: "",
           }}
-          onSubmit={async (values) => console.log(await sendFormToApi(values))}
+          onSubmit={async (values) => await sendFormToApi(navigation, values)}
           validationSchema={validationSchema}
         >
           {({ handleSubmit }) => (

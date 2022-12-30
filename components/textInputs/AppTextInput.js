@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, TextInput, View } from "react-native";
+import { Platform, StyleSheet, TextInput, View } from "react-native";
 
 import { useFonts } from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
@@ -32,7 +32,7 @@ function AppTextInput({ icon, marginVertical, style, ...otherProps }) {
       fontFamily: "NunitoSansRegular",
       fontSize: defaultStyles.systemFontSize.small,
       paddingRight: 5,
-      paddingVertical: 15,
+      paddingVertical: Platform.OS === "ios" ? 15 : 0,
       width: "85%",
     },
   });

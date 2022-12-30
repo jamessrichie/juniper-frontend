@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Image,
-  ImageBackground,
-  Keyboard,
-  SafeAreaView,
-  StyleSheet,
-  View,
-} from "react-native";
+import { Keyboard, StyleSheet, View } from "react-native";
 import { showMessage } from "react-native-flash-message";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
@@ -48,7 +41,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const sendFormToApi = async (values) => {
+const sendFormToApi = async (navigation, values) => {
   try {
     Keyboard.dismiss();
     const response = await fetch(
@@ -67,13 +60,10 @@ const sendFormToApi = async (values) => {
     const json = await response.json();
 
     if (response.status === 200) {
-      showMessage({
-        message: "Successfully requested password reset",
-        type: "success",
-      });
+      navigation.navigate("checkEmail", { email: values.email });
     } else {
       showMessage({
-        message: json.body,
+        message: json.status,
         type: "danger",
       });
     }
@@ -97,7 +87,7 @@ function ForgotPasswordScreen({ navigation }) {
       >
         <Formik
           initialValues={{ email: "" }}
-          onSubmit={async (values) => console.log(await sendFormToApi(values))}
+          onSubmit={async (values) => await sendFormToApi(navigation, values)}
           validationSchema={validationSchema}
         >
           {({ handleSubmit }) => (
