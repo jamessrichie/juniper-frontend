@@ -20,4 +20,10 @@ export default {
     inline: 18,
     chat: 32,
   },
+
+  circularImageSize: {
+    large: 72,
+    medium: 63,
+    small: 38,
+  },
 };
