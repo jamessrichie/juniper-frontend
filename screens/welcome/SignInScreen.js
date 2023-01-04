@@ -3,6 +3,8 @@ import { Keyboard, StyleSheet, View } from "react-native";
 import { showMessage } from "react-native-flash-message";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
+import * as SecureStore from "expo-secure-store";
+
 import { Formik } from "formik";
 import * as Yup from "yup";
 import YupPassword from "yup-password";
@@ -12,10 +14,10 @@ import HugeAppText from "../../components/appTexts/HugeAppText";
 import PrimaryButton from "../../components/buttons/PrimaryButton";
 import SecondaryButton from "../../components/buttons/SecondaryButton";
 import SeparatorWithText from "../../components/decorators/SeparatorWithText";
-import TinyHyperlink from "../../components/hyperlinks/TinyHyperlink";
 import FormTextInput from "../../components/textInputs/FormTextInput";
 
 import colors from "../../config/colors";
+import SmallAppText from "../../components/appTexts/SmallAppText";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email().required().label("Email"),
@@ -56,7 +58,46 @@ const styles = StyleSheet.create({
   },
 });
 
-const sendFormToApi = async (values) => {
+const checkProfileCompleted = async (navigation, userId, accessToken) => {
+  try {
+    const response = await fetch(
+      global.API_HOST + "/user/check-profile-completed",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: userId,
+          accessToken: accessToken,
+        }),
+      }
+    );
+    const json = await response.json();
+
+    if (response.status === 200) {
+      console.log(json.status);
+      if (json.status === "true") {
+        navigation.navigate("main", { screen: "profile" });
+      } else {
+        navigation.navigate("updatePersonalInfo");
+      }
+    } else {
+      showMessage({
+        message: json.status,
+        type: "danger",
+      });
+    }
+  } catch (error) {
+    showMessage({
+      message: error.toString(),
+      type: "danger",
+    });
+  }
+};
+
+const sendFormToApi = async (navigation, values) => {
   try {
     Keyboard.dismiss();
     const response = await fetch(global.API_HOST + "/auth/login", {
@@ -73,10 +114,11 @@ const sendFormToApi = async (values) => {
     const json = await response.json();
 
     if (response.status === 200) {
-      showMessage({
-        message: "Success",
-        type: "success",
-      });
+      await SecureStore.setItemAsync("userId", json.userId);
+      await SecureStore.setItemAsync("accessToken", json.accessToken);
+      await SecureStore.setItemAsync("refreshToken", json.refreshToken);
+
+      await checkProfileCompleted(navigation, json.userId, json.accessToken);
     } else if (response.status === 400) {
       showMessage({
         message: json.status,
@@ -107,7 +149,7 @@ function SignInScreen({ navigation }) {
       >
         <Formik
           initialValues={{ email: "", password: "" }}
-          onSubmit={async (values) => console.log(await sendFormToApi(values))}
+          onSubmit={async (values) => await sendFormToApi(navigation, values)}
           validationSchema={validationSchema}
         >
           {({ handleSubmit }) => (
@@ -137,12 +179,12 @@ function SignInScreen({ navigation }) {
                 textContentType={"password"}
                 style={styles.input}
               />
-              <TinyHyperlink
-                linkColor={colors.text.tertiary}
-                linkText={"Forgot Password?"}
+              <SmallAppText
                 onPress={() => navigation.navigate("forgot")}
                 style={styles.hyperlink}
-              />
+              >
+                Forgot Password?
+              </SmallAppText>
               <PrimaryButton onPress={handleSubmit}>Sign In</PrimaryButton>
             </>
           )}

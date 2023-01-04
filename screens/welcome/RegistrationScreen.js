@@ -12,10 +12,10 @@ import HugeAppText from "../../components/appTexts/HugeAppText";
 import PrimaryButton from "../../components/buttons/PrimaryButton";
 import SecondaryButton from "../../components/buttons/SecondaryButton";
 import SeparatorWithText from "../../components/decorators/SeparatorWithText";
-import TinyHyperlink from "../../components/hyperlinks/TinyHyperlink";
 import FormTextInput from "../../components/textInputs/FormTextInput";
 
 import colors from "../../config/colors";
+import SmallAppText from "../../components/appTexts/SmallAppText";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().label("Name"),
@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
   },
   hyperlink: {
     alignSelf: "center",
+    color: colors.text.tertiary,
     marginBottom: 15,
     marginTop: 5,
   },
@@ -165,14 +166,15 @@ function RegistrationScreen({ navigation }) {
                 textContentType={"password-new"}
                 style={styles.input}
               />
-              <TinyHyperlink
-                linkColor={colors.hyperlink}
-                linkText={"Terms & Conditions"}
-                onPress={() => Linking.openURL("https://google.com")}
-                preLinkText={"I have read and agree to the"}
-                textColor={colors.text.tertiary}
-                style={styles.hyperlink}
-              />
+              <SmallAppText style={styles.hyperlink}>
+                I have read and agree to the{" "}
+                <SmallAppText
+                  onPress={() => Linking.openURL("https://google.com")}
+                  style={{ color: colors.hyperlink }}
+                >
+                  Terms & Conditions
+                </SmallAppText>
+              </SmallAppText>
               <PrimaryButton onPress={handleSubmit}>
                 Create Account
               </PrimaryButton>

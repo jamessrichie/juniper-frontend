@@ -1,5 +1,5 @@
 import React from "react";
-import { Keyboard, SafeAreaView, StyleSheet, View } from "react-native";
+import { Keyboard, StyleSheet, Text, View } from "react-native";
 import { showMessage } from "react-native-flash-message";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
@@ -15,6 +15,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: "55%",
+  },
+  formContainer: {
     paddingHorizontal: "10%",
   },
   header: {
@@ -80,10 +82,12 @@ function CheckEmailScreen({ navigation, route }) {
       <KeyboardAwareScrollView
         keyboardShouldPersistTaps={"always"}
         showsVerticalScrollIndicator={false}
+        style={styles.formContainer}
       >
         <MediumAppText style={styles.body}>
-          We've just sent you an email at {email}! Please check it out as soon
-          as possible.
+          We've just sent you an email at{" "}
+          <Text style={{ color: colors.hyperlink }}>{email}</Text>! Please check
+          it out as soon as possible.
         </MediumAppText>
         <PrimaryButton onPress={async () => await resendEmail(email)}>
           Resend Email

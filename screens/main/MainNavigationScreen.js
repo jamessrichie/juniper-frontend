@@ -1,8 +1,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
 import { Ionicons } from "@expo/vector-icons";
 
 import MainNavigationHeader from "./MainNavigationHeader";
@@ -35,12 +34,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const navigationTheme = {
-  colors: {
-    background: colors.white,
-  },
-};
-
 // Screen names
 const discoverScreenName = "discover";
 const searchScreenName = "search";
@@ -51,55 +44,53 @@ const Tab = createBottomTabNavigator();
 
 function MainNavigationScreen() {
   return (
-    <NavigationContainer theme={navigationTheme}>
-      <Tab.Navigator
-        initialRouteName={discoverScreenName}
-        screenOptions={({ route }) => ({
-          header: () => {
-            let image;
+    <Tab.Navigator
+      initialRouteName={discoverScreenName}
+      screenOptions={({ route }) => ({
+        header: () => {
+          let image;
 
-            if (route.name === messageScreenName) {
-              image = require("../../assets/images/gradientText/chat.png");
-            } else if (route.name === profileScreenName) {
-              image = require("../../assets/images/gradientText/profile.png");
-            } else if (route.name === searchScreenName) {
-              image = require("../../assets/images/gradientText/search.png");
-            } else {
-              image = require("../../assets/images/gradientText/juniper.png");
-            }
+          if (route.name === messageScreenName) {
+            image = require("../../assets/images/gradientText/chat.png");
+          } else if (route.name === profileScreenName) {
+            image = require("../../assets/images/gradientText/profile.png");
+          } else if (route.name === searchScreenName) {
+            image = require("../../assets/images/gradientText/search.png");
+          } else {
+            image = require("../../assets/images/gradientText/juniper.png");
+          }
 
-            return <MainNavigationHeader image={image} />;
-          },
-          tabBarIcon: ({ focused }) => {
-            let icon;
+          return <MainNavigationHeader image={image} />;
+        },
+        tabBarIcon: ({ focused }) => {
+          let icon;
 
-            if (route.name === messageScreenName) {
-              icon = focused ? "chatbubbles" : "chatbubbles-outline";
-            } else if (route.name === profileScreenName) {
-              icon = focused ? "person-circle" : "person-circle-outline";
-            } else if (route.name === searchScreenName) {
-              icon = focused ? "search" : "search-outline";
-            } else {
-              icon = focused ? "home" : "home-outline";
-            }
-            return (
-              <Ionicons
-                name={icon}
-                size={defaultStyles.iconSize.navbar}
-                style={styles.icon}
-              />
-            );
-          },
-          tabBarShowLabel: false,
-          tabBarStyle: styles.tabBar,
-        })}
-      >
-        <Tab.Screen name={discoverScreenName} component={DiscoverScreen} />
-        <Tab.Screen name={searchScreenName} component={SearchScreen} />
-        <Tab.Screen name={messageScreenName} component={MessageScreen} />
-        <Tab.Screen name={profileScreenName} component={ProfileScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+          if (route.name === messageScreenName) {
+            icon = focused ? "chatbubbles" : "chatbubbles-outline";
+          } else if (route.name === profileScreenName) {
+            icon = focused ? "person-circle" : "person-circle-outline";
+          } else if (route.name === searchScreenName) {
+            icon = focused ? "search" : "search-outline";
+          } else {
+            icon = focused ? "home" : "home-outline";
+          }
+          return (
+            <Ionicons
+              name={icon}
+              size={defaultStyles.iconSize.navbar}
+              style={styles.icon}
+            />
+          );
+        },
+        tabBarShowLabel: false,
+        tabBarStyle: styles.tabBar,
+      })}
+    >
+      <Tab.Screen name={discoverScreenName} component={DiscoverScreen} />
+      <Tab.Screen name={searchScreenName} component={SearchScreen} />
+      <Tab.Screen name={messageScreenName} component={MessageScreen} />
+      <Tab.Screen name={profileScreenName} component={ProfileScreen} />
+    </Tab.Navigator>
   );
 }
 

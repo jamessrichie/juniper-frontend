@@ -8,6 +8,8 @@ import SignInScreen from "./screens/welcome/SignInScreen";
 import WelcomeNavigationScreen from "./screens/welcome/WelcomeNavigationScreen";
 
 import colors from "./config/colors";
+import MainNavigationScreen from "./screens/main/MainNavigationScreen";
+import AppScreen from "./screens/AppScreen";
 
 FlashMessage.setColorTheme({
   success: colors.success,
@@ -34,7 +36,7 @@ export default function App() {
 
   return (
     <>
-      <WelcomeNavigationScreen />
+      <AppScreen></AppScreen>
       <FlashMessage
         position="bottom"
         floating={true}

@@ -1,22 +1,12 @@
 import React from "react";
 import { Image, ImageBackground, StyleSheet } from "react-native";
-import FlashMessage from "react-native-flash-message";
-
-import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import ForgotPasswordScreen from "./ForgotPasswordScreen";
 import RegistrationScreen from "./RegistrationScreen";
 import SignInScreen from "./SignInScreen";
 import CheckEmailScreen from "./CheckEmailScreen";
-
-import colors from "../../config/colors";
-
-const navigationTheme = {
-  colors: {
-    background: "transparent",
-  },
-};
+import UpdatePersonalInformationScreen from "./UpdatePersonalInformationScreen";
 
 const SlideTransition = {
   cardStyleInterpolator: ({ current, next, layouts }) => {
@@ -74,6 +64,8 @@ const registrationScreenName = "register";
 const signInScreenName = "login";
 const checkEmailScreenName = "checkEmail";
 
+const updatePersonalInformationScreenName = "updatePersonalInfo";
+
 const Stack = createStackNavigator();
 
 function WelcomeNavigationScreen() {
@@ -87,36 +79,39 @@ function WelcomeNavigationScreen() {
         source={require("../../assets/images/whiteText/juniper.png")}
         style={styles.juniper}
       />
-      <NavigationContainer theme={navigationTheme}>
-        <Stack.Navigator
-          initialRouteName={signInScreenName}
-          screenOptions={{
-            backgroundImage: require("../../assets/images/backgrounds/wave.png"),
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen
-            component={CheckEmailScreen}
-            name={checkEmailScreenName}
-            options={{ ...SlideTransition }}
-          />
-          <Stack.Screen
-            component={ForgotPasswordScreen}
-            name={forgotPasswordScreenName}
-            options={{ ...SlideTransition }}
-          />
-          <Stack.Screen
-            component={RegistrationScreen}
-            name={registrationScreenName}
-            options={{ ...SlideTransition }}
-          />
-          <Stack.Screen
-            component={SignInScreen}
-            name={signInScreenName}
-            options={{ ...SlideTransition }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <Stack.Navigator
+        initialRouteName={signInScreenName}
+        screenOptions={{
+          backgroundImage: require("../../assets/images/backgrounds/wave.png"),
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen
+          component={UpdatePersonalInformationScreen}
+          name={updatePersonalInformationScreenName}
+          options={{ ...SlideTransition }}
+        />
+        <Stack.Screen
+          component={CheckEmailScreen}
+          name={checkEmailScreenName}
+          options={{ ...SlideTransition }}
+        />
+        <Stack.Screen
+          component={ForgotPasswordScreen}
+          name={forgotPasswordScreenName}
+          options={{ ...SlideTransition }}
+        />
+        <Stack.Screen
+          component={RegistrationScreen}
+          name={registrationScreenName}
+          options={{ ...SlideTransition }}
+        />
+        <Stack.Screen
+          component={SignInScreen}
+          name={signInScreenName}
+          options={{ ...SlideTransition }}
+        />
+      </Stack.Navigator>
     </ImageBackground>
   );
 }
