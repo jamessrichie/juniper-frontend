@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
+import { StyleSheet, Text, TouchableHighlight, View } from "react-native";
 
 import { useFonts } from "expo-font";
 import { LinearGradient } from "expo-linear-gradient";
@@ -41,7 +35,7 @@ function Button({
     button: {
       alignItems: "center",
       borderColor: stroke,
-      borderRadius: 100,
+      borderRadius: 1000,
       borderWidth: stroke ? 1 : 0,
       justifyContent: "center",
       padding: stroke ? 13 : 14,
@@ -53,7 +47,7 @@ function Button({
     },
     touch: {
       borderColor: stroke,
-      borderRadius: 100,
+      borderRadius: 1000,
     },
   });
 
