@@ -17,7 +17,7 @@ function AppTextInput({ icon, marginVertical, style, ...otherProps }) {
   const styles = StyleSheet.create({
     container: {
       borderColor: colors.lightTextBox.stroke,
-      borderRadius: 100,
+      borderRadius: 1000,
       borderWidth: 1,
       flexDirection: "row",
       marginVertical,
@@ -25,15 +25,17 @@ function AppTextInput({ icon, marginVertical, style, ...otherProps }) {
     icon: {
       color: colors.lightTextBox.placeholder,
       paddingLeft: 16,
+      paddingRight: 11,
       paddingVertical: 15,
-      width: "13%",
     },
     text: {
       fontFamily: "NunitoSansRegular",
       fontSize: defaultStyles.systemFontSize.small,
-      paddingRight: 5,
+      flexGrow: 1,
+      marginRight: 8,
+      paddingRight: 8,
       paddingVertical: Platform.OS === "ios" ? 15 : 0,
-      width: "85%",
+      width: "0%",
     },
   });
 
