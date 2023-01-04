@@ -11,9 +11,9 @@ const styles = StyleSheet.create({
   },
 });
 
-function TinyAppText({ children, style, weight }) {
+function TinyAppText({ children, style, weight, ...otherProps }) {
   return (
-    <AppText style={[styles.text, style]} weight={weight}>
+    <AppText weight={weight} style={[styles.text, style]} {...otherProps}>
       {children}
     </AppText>
   );

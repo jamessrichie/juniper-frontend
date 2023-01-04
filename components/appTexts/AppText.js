@@ -3,7 +3,7 @@ import { StyleSheet, Text } from "react-native";
 
 import { useFonts } from "expo-font";
 
-function AppText({ children, style, weight = "regular" }) {
+function AppText({ children, style, weight = "regular", ...otherProps }) {
   const [fontsLoaded] = useFonts({
     light: require("../../assets/fonts/NunitoSans-Light.ttf"),
     regular: require("../../assets/fonts/NunitoSans-Regular.ttf"),
@@ -19,7 +19,11 @@ function AppText({ children, style, weight = "regular" }) {
     },
   });
 
-  return <Text style={[styles.text, style]}>{children}</Text>;
+  return (
+    <Text style={[styles.text, style]} {...otherProps}>
+      {children}
+    </Text>
+  );
 }
 
 export default AppText;

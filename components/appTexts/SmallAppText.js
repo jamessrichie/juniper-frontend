@@ -11,9 +11,9 @@ const styles = StyleSheet.create({
   },
 });
 
-function SmallAppText({ children, style, weight }) {
+function SmallAppText({ children, style, weight, ...otherProps }) {
   return (
-    <AppText style={[styles.text, style]} weight={weight}>
+    <AppText weight={weight} style={[styles.text, style]} {...otherProps}>
       {children}
     </AppText>
   );

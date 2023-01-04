@@ -11,9 +11,9 @@ const styles = StyleSheet.create({
   },
 });
 
-function MediumAppText({ children, style, weight }) {
+function MediumAppText({ children, style, weight, ...otherProps }) {
   return (
-    <AppText style={[styles.text, style]} weight={weight}>
+    <AppText weight={weight} style={[styles.text, style]} {...otherProps}>
       {children}
     </AppText>
   );
