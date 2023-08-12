@@ -19,9 +19,11 @@ export default {
     navbar: 30,
     inline: 18,
     chat: 32,
+    tiny: 20,
   },
 
   circularImageSize: {
+    huge: 87,
     large: 72,
     medium: 63,
     small: 38,
