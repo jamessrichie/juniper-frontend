@@ -6,7 +6,7 @@ import ForgotPasswordScreen from "./ForgotPasswordScreen";
 import RegistrationScreen from "./RegistrationScreen";
 import SignInScreen from "./SignInScreen";
 import CheckEmailScreen from "./CheckEmailScreen";
-import UpdatePersonalInformationScreen from "./UpdatePersonalInformationScreen";
+import PersonalInformationScreen from "./PersonalInformationScreen";
 
 const SlideTransition = {
   cardStyleInterpolator: ({ current, next, layouts }) => {
@@ -87,7 +87,7 @@ function WelcomeNavigationScreen() {
         }}
       >
         <Stack.Screen
-          component={UpdatePersonalInformationScreen}
+          component={PersonalInformationScreen}
           name={updatePersonalInformationScreenName}
           options={{ ...SlideTransition }}
         />
