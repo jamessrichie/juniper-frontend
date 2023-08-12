@@ -3,14 +3,14 @@ import CircularImage from "./CircularImage";
 
 import defaultStyles from "../../config/styles";
 
-function LargeCircularImage({ source, style }) {
+function HugeCircularImage({ source, style }) {
   return (
     <CircularImage
-      size={defaultStyles.circularImageSize.large}
+      size={defaultStyles.circularImageSize.huge}
       source={source}
       style={style}
     />
   );
 }
 
-export default LargeCircularImage;
+export default HugeCircularImage;
