@@ -44,6 +44,9 @@ const styles = StyleSheet.create({
 const sendFormToApi = async (navigation, values) => {
   try {
     Keyboard.dismiss();
+
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), 8000);
     const response = await fetch(
       global.API_HOST + "/auth/request-reset-password",
       {
@@ -55,8 +58,11 @@ const sendFormToApi = async (navigation, values) => {
         body: JSON.stringify({
           email: values.email,
         }),
+        signal: controller.signal,
       }
     );
+    clearTimeout(id);
+
     const json = await response.json();
 
     if (response.status === 200) {
@@ -70,7 +76,8 @@ const sendFormToApi = async (navigation, values) => {
     return json;
   } catch (error) {
     showMessage({
-      message: error.toString(),
+      message:
+        error.name === "AbortError" ? "Connection timeout" : error.toString(),
       type: "danger",
     });
   }
@@ -112,7 +119,7 @@ function ForgotPasswordScreen({ navigation }) {
           )}
         </Formik>
         <SeparatorWithText style={styles.separator}>
-          Already have your password?
+          Already Have Your Password?
         </SeparatorWithText>
         <SecondaryButton onPress={() => navigation.navigate("login")}>
           Sign In

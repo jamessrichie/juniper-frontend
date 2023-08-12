@@ -37,6 +37,9 @@ const styles = StyleSheet.create({
 const resendEmail = async (email) => {
   try {
     Keyboard.dismiss();
+
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), 8000);
     const response = await fetch(global.API_HOST + "/services/resend-email", {
       method: "POST",
       headers: {
@@ -46,7 +49,10 @@ const resendEmail = async (email) => {
       body: JSON.stringify({
         email: email,
       }),
+      signal: controller.signal,
     });
+    clearTimeout(id);
+
     const json = await response.json();
 
     if (response.status === 200) {
@@ -67,7 +73,8 @@ const resendEmail = async (email) => {
     }
   } catch (error) {
     showMessage({
-      message: error.toString(),
+      message:
+        error.name === "AbortError" ? "Connection timeout" : error.toString(),
       type: "danger",
     });
   }

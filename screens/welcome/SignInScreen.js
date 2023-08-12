@@ -21,14 +21,7 @@ import SmallAppText from "../../components/appTexts/SmallAppText";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email().required().label("Email"),
-  password: Yup.string()
-    .min(4)
-    .minLowercase(1)
-    .minUppercase(1)
-    .minNumbers(1)
-    .minSymbols(1)
-    .required()
-    .label("Password"),
+  password: Yup.string().required().label("Password"),
 });
 
 const styles = StyleSheet.create({
@@ -77,7 +70,6 @@ const checkProfileCompleted = async (navigation, userId, accessToken) => {
     const json = await response.json();
 
     if (response.status === 200) {
-      console.log(json.status);
       if (json.status === "true") {
         navigation.navigate("main", { screen: "profile" });
       } else {
@@ -100,6 +92,9 @@ const checkProfileCompleted = async (navigation, userId, accessToken) => {
 const sendFormToApi = async (navigation, values) => {
   try {
     Keyboard.dismiss();
+
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), 8000);
     const response = await fetch(global.API_HOST + "/auth/login", {
       method: "POST",
       headers: {
@@ -110,7 +105,10 @@ const sendFormToApi = async (navigation, values) => {
         email: values.email,
         password: values.password,
       }),
+      signal: controller.signal,
     });
+    clearTimeout(id);
+
     const json = await response.json();
 
     if (response.status === 200) {
@@ -132,7 +130,8 @@ const sendFormToApi = async (navigation, values) => {
     }
   } catch (error) {
     showMessage({
-      message: error.toString(),
+      message:
+        error.name === "AbortError" ? "Connection timeout" : error.toString(),
       type: "danger",
     });
   }

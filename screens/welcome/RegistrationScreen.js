@@ -20,14 +20,7 @@ import SmallAppText from "../../components/appTexts/SmallAppText";
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().label("Name"),
   email: Yup.string().email().required().label("Email"),
-  password: Yup.string()
-    .min(4)
-    .minLowercase(1)
-    .minUppercase(1)
-    .minNumbers(1)
-    .minSymbols(1)
-    .required()
-    .label("Password"),
+  password: Yup.string().min(4).required().label("Password"),
   passwordConfirmation: Yup.string().oneOf(
     [Yup.ref("password"), null],
     "Passwords must match"
@@ -64,6 +57,9 @@ const styles = StyleSheet.create({
 const sendFormToApi = async (navigation, values) => {
   try {
     Keyboard.dismiss();
+
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), 8000);
     const response = await fetch(global.API_HOST + "/user/create", {
       method: "POST",
       headers: {
@@ -75,7 +71,10 @@ const sendFormToApi = async (navigation, values) => {
         email: values.email,
         password: values.password,
       }),
+      signal: controller.signal,
     });
+    clearTimeout(id);
+
     const json = await response.json();
 
     if (response.status === 200) {
@@ -89,7 +88,8 @@ const sendFormToApi = async (navigation, values) => {
     return json;
   } catch (error) {
     showMessage({
-      message: error.toString(),
+      message:
+        error.name === "AbortError" ? "Connection timeout" : error.toString(),
       type: "danger",
     });
   }
@@ -142,7 +142,7 @@ function RegistrationScreen({ navigation }) {
               />
               <FormTextInput
                 autoCapitalize={"none"}
-                autoComplete={"password-new"}
+                autoComplete={"password"}
                 autoCorrect={false}
                 clearButtonMode={"while-editing"}
                 field={"password"}
@@ -150,12 +150,12 @@ function RegistrationScreen({ navigation }) {
                 keyboardType={"default"}
                 placeholder={"Password"}
                 secureTextEntry
-                textContentType={"password-new"}
+                textContentType={"password"}
                 style={styles.input}
               />
               <FormTextInput
                 autoCapitalize={"none"}
-                autoComplete={"password-new"}
+                autoComplete={"password"}
                 autoCorrect={false}
                 clearButtonMode={"while-editing"}
                 field={"passwordConfirmation"}
@@ -163,7 +163,7 @@ function RegistrationScreen({ navigation }) {
                 keyboardType={"default"}
                 placeholder={"Confirm Password"}
                 secureTextEntry
-                textContentType={"password-new"}
+                textContentType={"password"}
                 style={styles.input}
               />
               <SmallAppText style={styles.hyperlink}>
@@ -182,7 +182,7 @@ function RegistrationScreen({ navigation }) {
           )}
         </Formik>
         <SeparatorWithText style={styles.separator}>
-          Already Have An Account?
+          Already Have an Account?
         </SeparatorWithText>
         <SecondaryButton onPress={() => navigation.navigate("login")}>
           Sign In
